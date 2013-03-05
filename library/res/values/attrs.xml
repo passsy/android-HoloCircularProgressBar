@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <attr name="gravity">
+        <flag name="bottom" value="0x50"/>
+        <flag name="center" value="0x11"/>
+        <flag name="center_horizontal" value="0x01"/>
+        <flag name="center_vertical" value="0x10"/>
+        <flag name="clip" value="0x88"/>
+        <flag name="clip_horizontal" value="0x08"/>
+        <flag name="clip_vertical" value="0x80"/>
+        <flag name="end" value="0x00800005"/>
+        <flag name="fill" value="0x77"/>
+        <flag name="fill_horizontal" value="0x07"/>
+        <flag name="fill_vertical" value="0x70"/>
+        <flag name="left" value="0x03"/>
+        <flag name="right" value="0x05"/>
+        <flag name="start" value="0x00800003"/>
+        <flag name="top" value="0x30"/>
+    </attr>
+
+    <declare-styleable name="HoloCircularProgressBar">
+        <attr name="stroke_width" format="dimension" />
+        <attr name="progress" format="float"></attr>
+        <attr name="marker_progress" format="float"></attr>
+        <attr name="progress_color" format="color"></attr>
+        <attr name="progress_background_color" format="color"></attr>
+        <attr name="gravity"></attr>
+    </declare-styleable>
+    
+    <declare-styleable name="Theme">
+        <attr name="circularProgressBarStyle" format="reference"></attr>        
+    </declare-styleable>
+
+</resources>

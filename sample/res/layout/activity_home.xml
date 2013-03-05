@@ -1,0 +1,27 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".CircularProgressBarSample" xmlns:app="http://schemas.android.com/apk/res/de.passsy.circularprogressbarsample">
+
+    <de.passsy.holocircularprogressbar.HoloCircularProgressBar
+        android:id="@+id/holoCircularProgressBar1"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_above="@+id/switch_theme"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/switch_theme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="@string/switch_theme" />
+
+</RelativeLayout>
