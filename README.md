@@ -7,8 +7,8 @@ HoloCircularProgressBar is a Custom View implementation for Android you might kn
 
 
 <div align="center">
-  <img style="height:400px" src="https://raw.github.com/passsy/HoloCircularProgressBar/master/raw/screenshot1.png"/>
-  <img style="height:400px"   src="https://raw.github.com/passsy/HoloCircularProgressBar/master/raw/screenshot2.png"/>
+  <img height="400px" src="https://raw.github.com/passsy/HoloCircularProgressBar/master/raw/screenshot1.png"/>
+  <img height="400px" src="https://raw.github.com/passsy/HoloCircularProgressBar/master/raw/screenshot2.png"/>
 </div>
 
 
