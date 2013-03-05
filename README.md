@@ -5,7 +5,11 @@ HoloCircularProgressBar
 
 HoloCircularProgressBar is a Custom View implementation for Android you might know from the Android Clock App from Android 4.1
 
-![My image](https://raw.github.com/passsy/HoloCircularProgressBar/master/raw/screenshot1.png)
+
+    <div align="center">
+        <img style="height:400px" src="https://raw.github.com/passsy/HoloCircularProgressBar/master/raw/screenshot1.png"/>
+        <img style="height:400px"   src="https://raw.github.com/passsy/HoloCircularProgressBar/master/raw/screenshot2.png"/>
+    </div>
 
 
 ## Usage
