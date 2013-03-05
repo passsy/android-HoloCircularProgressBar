@@ -14,6 +14,71 @@ HoloCircularProgressBar is a Custom View implementation for Android you might kn
 
 ## Usage
 
+### Sample Project
+
+You can see the ProgressBar working in the sample application. Just check out the library and create a new "Android Project form Existing Code"
+
+### Use it in your own Code
+
+Add the View in your Layout
+
+    <de.passsy.holocircularprogressbar.HoloCircularProgressBar
+        android:id="@+id/holoCircularProgressBar1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+#### Got this error?
+
+    The following classes could not be instantiated:
+    - de.passsy.holocircularprogressbar.HoloCircularProgressBar (Open Class, Show Error Log)
+    See the Error Log (Window > Show View) for more details.
+    Tip: Use View.isInEditMode() in your custom views to skip code when shown in Eclipse
+
+If your Layout Editor can't draw the view, you have to restart Eclipse. There is a bug in the ADT Plugin
+
+##### Got the next error?
+
+    Missing styles. Is the correct theme chosen for this layout?
+    Use the Theme combo box above the layout to choose a different layout, or fix the theme style references.
+    
+    Failed to find style 'circularProgressBarStyle' in current theme
+
+You have to add a style for this View. see below
+
+There are several XML attributes you can add the the HoloCircularProgressBar
+
+    <de.passsy.holocircularprogressbar.HoloCircularProgressBar
+        android:id="@+id/holoCircularProgressBar1"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+
+        app:stroke_width="10dp"
+        app:progress="0.4"
+        app:marker_progress="0.6"
+        app:progress_color="@android:color/holo_orange_dark"
+        app:progress_background_color="#cccccc"
+        app:gravity="center" />
+
+### Style
+
+Don't forget to add a default style to your AppTheme
+
+    <style name="AppTheme" parent="android:Theme.Holo">
+        <item name="circularProgressBarStyle">@style/CircularProgressBar</item>
+    </style>
+
+I added two simple styles @style/CircularProgressBar and @style/CircularProgressBarLight to give you a quick start. You can see both styles in action in the sample Project
+
+After you wrote your own style you might restart your Eclipse again as I mentioned before. The ADT Plugin really has some troubles working with Android Libraries and Styles 
+
+## Bugs
+
+You found bugs? Report them or feel free to fix them by yourself and make a pull request. No one wants a buggy library
+
+
+
+
+
 
 ## License
 
