@@ -5,7 +5,7 @@ HoloCircularProgressBar
 
 HoloCircularProgressBar is a Custom View implementation for Android you might know from the Android Clock App from Android 4.1
 
-![My image](https://github.com/passsy/HoloCircularProgressBar/blob/master/raw/screenshot1.png)
+![My image](https://raw.github.com/passsy/HoloCircularProgressBar/master/raw/screenshot1.png)
 
 
 ## Usage
