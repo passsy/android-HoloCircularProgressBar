@@ -444,6 +444,14 @@ public class HoloCircularProgressBar extends View {
 		mCircleStrokeWidth = dimension;
 	}
 
+	public float getMarkerProgress() {
+		return mMarkerProgress;
+	}
+
+	public float getProgress() {
+		return mProgress;
+	}
+
 	/**
 	 * Gets the progress color.
 	 * 

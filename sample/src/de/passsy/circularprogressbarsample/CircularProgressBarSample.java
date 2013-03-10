@@ -88,7 +88,6 @@ public class CircularProgressBarSample extends Activity {
 		final float progress = (float) (Math.random() * 2);
 		final ObjectAnimator progressBarAnimator = ObjectAnimator.ofFloat(progressBar, "progress", progress);
 		progressBarAnimator.setDuration(3000);
-		progressBarAnimator.setupEndValues();
 
 		progressBarAnimator.addListener(new AnimatorListener() {
 
