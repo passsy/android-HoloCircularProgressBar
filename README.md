@@ -95,3 +95,6 @@ You found bugs? Report them or feel free to fix them by yourself and make a pull
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
+    
+
+Author: [Pascal Welsch](https://plus.google.com/108162731626734859070?rel=author)
