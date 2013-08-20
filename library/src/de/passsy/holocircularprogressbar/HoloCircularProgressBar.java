@@ -218,7 +218,7 @@ public class HoloCircularProgressBar extends View {
 		setProgress(attributes.getFloat(R.styleable.HoloCircularProgressBar_progress, 0.0f));
 		setMarkerProgress(attributes.getFloat(R.styleable.HoloCircularProgressBar_marker_progress, 0.0f));
 		setWheelSize((int) attributes.getDimension(R.styleable.HoloCircularProgressBar_stroke_width, 10));
-		mGravity = attributes.getInt(R.styleable.HoloCircularProgressBar_gravity, Gravity.CENTER);
+		mGravity = attributes.getInt(R.styleable.HoloCircularProgressBar_android_gravity, Gravity.CENTER);
 
 		attributes.recycle();
 
