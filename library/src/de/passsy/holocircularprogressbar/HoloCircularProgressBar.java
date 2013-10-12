@@ -192,6 +192,11 @@ public class HoloCircularProgressBar extends View {
 	private final RectF mSquareRect = new RectF();
 
 	/**
+	 * indicates if the thumb is visible
+	 */
+	private boolean mIsThumbEnabled = true;
+
+	/**
 	 * Instantiates a new holo circular progress bar.
 	 * 
 	 * @param context
@@ -236,6 +241,9 @@ public class HoloCircularProgressBar extends View {
 		setProgress(attributes.getFloat(R.styleable.HoloCircularProgressBar_progress, 0.0f));
 		setMarkerProgress(attributes.getFloat(R.styleable.HoloCircularProgressBar_marker_progress, 0.0f));
 		setWheelSize((int) attributes.getDimension(R.styleable.HoloCircularProgressBar_stroke_width, 10));
+		mIsThumbEnabled = attributes.getBoolean(R.styleable.HoloCircularProgressBar_thumb_visible, true);
+		mIsMarkerEnabled = attributes.getBoolean(R.styleable.HoloCircularProgressBar_marker_visible, true);
+
 		mGravity = attributes.getInt(R.styleable.HoloCircularProgressBar_android_gravity, Gravity.CENTER);
 
 		attributes.recycle();
@@ -287,17 +295,19 @@ public class HoloCircularProgressBar extends View {
 			canvas.restore();
 		}
 
-		// draw the thumb square at the correct rotated position
-		canvas.save();
-		canvas.rotate(progressRotation - 90);
-		// rotate the square by 45 degrees
-		canvas.rotate(45, mThumbPosX, mThumbPosY);
-		mSquareRect.left = mThumbPosX - mThumbRadius / 3;
-		mSquareRect.right = mThumbPosX + mThumbRadius / 3;
-		mSquareRect.top = mThumbPosY - mThumbRadius / 3;
-		mSquareRect.bottom = mThumbPosY + mThumbRadius / 3;
-		canvas.drawRect(mSquareRect, mThumbColorPaint);
-		canvas.restore();
+		if (isThumbEnabled()) {
+			// draw the thumb square at the correct rotated position
+			canvas.save();
+			canvas.rotate(progressRotation - 90);
+			// rotate the square by 45 degrees
+			canvas.rotate(45, mThumbPosX, mThumbPosY);
+			mSquareRect.left = mThumbPosX - mThumbRadius / 3;
+			mSquareRect.right = mThumbPosX + mThumbRadius / 3;
+			mSquareRect.top = mThumbPosY - mThumbRadius / 3;
+			mSquareRect.bottom = mThumbPosY + mThumbRadius / 3;
+			canvas.drawRect(mSquareRect, mThumbColorPaint);
+			canvas.restore();
+		}
 	}
 
 	/*
@@ -525,6 +535,22 @@ public class HoloCircularProgressBar extends View {
 	}
 
 	/**
+	 * 
+	 * @return true if the marker is visible
+	 */
+	public boolean isMarkerEnabled() {
+		return mIsMarkerEnabled;
+	}
+
+	/**
+	 * 
+	 * @return true if the marker is visible
+	 */
+	public boolean isThumbEnabled() {
+		return mIsThumbEnabled;
+	}
+
+	/**
 	 * Sets the marker enabled.
 	 * 
 	 * @param enabled
@@ -597,6 +623,10 @@ public class HoloCircularProgressBar extends View {
 		mProgressColor = color;
 
 		updateProgressColor();
+	}
+
+	public void setThumbEnabled(final boolean enabled) {
+		mIsThumbEnabled = enabled;
 	}
 
 }
