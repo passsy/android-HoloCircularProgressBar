@@ -41,15 +41,6 @@
         android:layout_alignParentTop="true"
         android:text="Auto animation" />
 
-    <ImageButton
-        android:id="@+id/imageButton1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/one"
-        android:layout_marginBottom="14dp"
-        android:layout_toRightOf="@+id/holoCircularProgressBar1"
-        android:src="@android:drawable/btn_star" />
-
     <Button
         android:id="@+id/random_color"
         android:layout_width="wrap_content"
