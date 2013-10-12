@@ -69,7 +69,14 @@ Don't forget to add a default style to your AppTheme
 
 I added two simple styles `@style/CircularProgressBar` and `@style/CircularProgressBarLight` to give you a quick start. You can see both styles in action in the sample Project
 
-After you wrote your own style you might restart your Eclipse again as I mentioned before. The ADT Plugin really has some troubles working with Android Libraries and Styles 
+After you wrote your own style you might restart your Eclipse again as I mentioned before. The ADT Plugin really has some troubles working with Android Libraries and Styles
+
+Of cause can you change the color at runtime. Here are some examples from the sample app:
+
+<div align="center">
+  <img height="400px" src="https://raw.github.com/passsy/android-HoloCircularProgressBar/master/raw/screenshot3.png"/>
+  <img height="400px" src="https://raw.github.com/passsy/android-HoloCircularProgressBar/master/raw/screenshot4.png"/>
+</div>
 
 ## Bugs
 
