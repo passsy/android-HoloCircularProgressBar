@@ -1,7 +1,6 @@
-HoloCircularProgressBar
-=======================
+# HoloCircularProgressBar
 
-## What is a HoloCircularProgressBar
+### What is HoloCircularProgressBar
 
 HoloCircularProgressBar is a Custom View implementation for Android you might know from the Android Clock App from Android 4.1
 
@@ -10,7 +9,6 @@ HoloCircularProgressBar is a Custom View implementation for Android you might kn
   <img height="400px" src="https://raw.github.com/passsy/android-HoloCircularProgressBar/master/raw/screenshot1.png"/>
   <img height="400px" src="https://raw.github.com/passsy/android-HoloCircularProgressBar/master/raw/screenshot2.png"/>
 </div>
-
 
 ## Usage
 
@@ -57,7 +55,9 @@ There are several XML attributes you can add the the HoloCircularProgressBar
         app:marker_progress="0.6"
         app:progress_color="@android:color/holo_orange_dark"
         app:progress_background_color="#cccccc"
-        app:gravity="center" />
+        app:gravity="center"
+        app:marker_visible="false"
+        app:thumb_visible="false"/>
 
 ### Style
 
@@ -67,7 +67,7 @@ Don't forget to add a default style to your AppTheme
         <item name="circularProgressBarStyle">@style/CircularProgressBar</item>
     </style>
 
-I added two simple styles @style/CircularProgressBar and @style/CircularProgressBarLight to give you a quick start. You can see both styles in action in the sample Project
+I added two simple styles `@style/CircularProgressBar` and `@style/CircularProgressBarLight` to give you a quick start. You can see both styles in action in the sample Project
 
 After you wrote your own style you might restart your Eclipse again as I mentioned before. The ADT Plugin really has some troubles working with Android Libraries and Styles 
 
@@ -75,9 +75,20 @@ After you wrote your own style you might restart your Eclipse again as I mention
 
 You found bugs? Report them or feel free to fix them by yourself and make a pull request. No one wants a buggy library
 
+## What's new (Changelog)
 
+##### version 1.1 `12.10.13`
 
+	* change color at runtime
+	* XML Attributes thumb_visible and marker_visible
+	* minSdkVersion decreased to 8 for the library
+	* avoid attr conflict with other library like HoloEverywhere
+	* fixed no animation from progress 0 to progress 1
+	* updated sample app with new test functions
 
+##### version 1.0 `10.03.13`
+
+	* initial version of a holo themend circular progress bar 
 
 
 ## License
