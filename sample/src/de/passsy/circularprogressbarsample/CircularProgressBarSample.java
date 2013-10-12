@@ -1,5 +1,7 @@
 package de.passsy.circularprogressbarsample;
 
+import java.util.Random;
+
 import android.animation.Animator;
 import android.animation.Animator.AnimatorListener;
 import android.animation.ObjectAnimator;
@@ -7,15 +9,17 @@ import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.Switch;
-import android.widget.ToggleButton;
 import de.passsy.holocircularprogressbar.HoloCircularProgressBar;
 
 /**
@@ -26,11 +30,12 @@ import de.passsy.holocircularprogressbar.HoloCircularProgressBar;
  */
 public class CircularProgressBarSample extends Activity {
 
+	private static final String TAG = CircularProgressBarSample.class.getSimpleName();
+
 	/**
 	 * The Switch button.
 	 */
-	private Button mSwitchButton;
-	private ToggleButton mAutoAnimateButton;
+	private Button mColorSwitchButton;
 
 	private HoloCircularProgressBar mHoloCircularProgressBar;
 	private ObjectAnimator mProgressBarAnimator;
@@ -61,12 +66,12 @@ public class CircularProgressBarSample extends Activity {
 
 		mHoloCircularProgressBar = (HoloCircularProgressBar) findViewById(R.id.holoCircularProgressBar1);
 
-		mSwitchButton = (Button) findViewById(R.id.switch_theme);
-		mSwitchButton.setOnClickListener(new OnClickListener() {
+		mColorSwitchButton = (Button) findViewById(R.id.random_color);
+		mColorSwitchButton.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(final View v) {
-				switchTheme();
+				switchColor();
 			}
 		});
 
@@ -94,6 +99,7 @@ public class CircularProgressBarSample extends Activity {
 				}
 				animate(mHoloCircularProgressBar, null, 1f, 1000);
 				mHoloCircularProgressBar.setMarkerProgress(1f);
+				mHoloCircularProgressBar.setProgressColor(Color.CYAN);
 
 			}
 		});
@@ -143,6 +149,18 @@ public class CircularProgressBarSample extends Activity {
 			}
 		});
 
+	}
+
+	/**
+	 * generates random colors for the ProgressBar
+	 */
+	protected void switchColor() {
+		Random r = new Random();
+		int randomColor = Color.rgb(r.nextInt(256), r.nextInt(256), r.nextInt(256));
+		mHoloCircularProgressBar.setProgressColor(randomColor);
+
+		randomColor = Color.rgb(r.nextInt(256), r.nextInt(256), r.nextInt(256));
+		mHoloCircularProgressBar.setProgressBackgroundColor(randomColor);
 	}
 
 	/**
@@ -209,6 +227,22 @@ public class CircularProgressBarSample extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.circular_progress_bar_sample, menu);
 		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		switch (item.getItemId()) {
+		case R.id.menu_switch_theme:
+			switchTheme();
+			break;
+
+		default:
+			Log.w(TAG, "couldn't map a click action for " + item);
+			break;
+		}
+
+		return super.onOptionsItemSelected(item);
 	}
 
 	/**

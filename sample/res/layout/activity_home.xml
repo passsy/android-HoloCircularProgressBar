@@ -12,17 +12,9 @@
         android:id="@+id/holoCircularProgressBar1"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:layout_above="@+id/switch_theme"
-        android:layout_alignParentTop="true"
+        android:layout_above="@+id/zero"
+        android:layout_below="@+id/auto_animate_switch"
         android:layout_centerHorizontal="true" />
-
-    <Button
-        android:id="@+id/switch_theme"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:text="@string/switch_theme" />
 
     <Button
         android:id="@+id/zero"
@@ -46,7 +38,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/holoCircularProgressBar1"
+        android:layout_alignParentTop="true"
         android:text="Auto animation" />
+
+    <ImageButton
+        android:id="@+id/imageButton1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/one"
+        android:layout_marginBottom="14dp"
+        android:layout_toRightOf="@+id/holoCircularProgressBar1"
+        android:src="@android:drawable/btn_star" />
+
+    <Button
+        android:id="@+id/random_color"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="@string/random_color" />
 
 </RelativeLayout>

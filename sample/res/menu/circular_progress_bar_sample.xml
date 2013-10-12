@@ -1,3 +1,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
+    <item
+        android:id="@+id/menu_switch_theme"
+        android:icon="@android:drawable/ic_menu_revert"
+        android:title="@string/switch_theme">
+    </item>
+
 </menu>
