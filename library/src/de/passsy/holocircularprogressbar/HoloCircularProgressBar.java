@@ -524,12 +524,18 @@ public class HoloCircularProgressBar extends View {
 			return;
 		}
 
-		mProgress = progress % 1.0f;
-
-		if (progress >= 1) {
-			mOverrdraw = true;
-		} else {
+		if (progress == 1) {
 			mOverrdraw = false;
+			mProgress = 1;
+		} else {
+
+			if (progress >= 1) {
+				mOverrdraw = true;
+			} else {
+				mOverrdraw = false;
+			}
+
+			mProgress = progress % 1.0f;
 		}
 
 		if (!mIsInitializing) {

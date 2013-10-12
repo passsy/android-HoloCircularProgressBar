@@ -12,6 +12,10 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.Switch;
+import android.widget.ToggleButton;
 import de.passsy.holocircularprogressbar.HoloCircularProgressBar;
 
 /**
@@ -26,6 +30,14 @@ public class CircularProgressBarSample extends Activity {
 	 * The Switch button.
 	 */
 	private Button mSwitchButton;
+	private ToggleButton mAutoAnimateButton;
+
+	private HoloCircularProgressBar mHoloCircularProgressBar;
+	private ObjectAnimator mProgressBarAnimator;
+	protected boolean mAnimationHasEnded = false;
+	private Button mZero;
+	private Button mOne;
+	private Switch mAutoAnimateSwitch;
 
 	/*
 	 * (non-Javadoc)
@@ -47,6 +59,8 @@ public class CircularProgressBarSample extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
 
+		mHoloCircularProgressBar = (HoloCircularProgressBar) findViewById(R.id.holoCircularProgressBar1);
+
 		mSwitchButton = (Button) findViewById(R.id.switch_theme);
 		mSwitchButton.setOnClickListener(new OnClickListener() {
 
@@ -56,26 +70,73 @@ public class CircularProgressBarSample extends Activity {
 			}
 		});
 
-		final HoloCircularProgressBar progress = (HoloCircularProgressBar) findViewById(R.id.holoCircularProgressBar1);
-		animate(progress, new AnimatorListener() {
+		mZero = (Button) findViewById(R.id.zero);
+		mZero.setOnClickListener(new OnClickListener() {
 
 			@Override
-			public void onAnimationCancel(final Animator animation) {
-			}
+			public void onClick(View v) {
+				animate(mHoloCircularProgressBar, null, 0f, 1000);
+				mHoloCircularProgressBar.setMarkerProgress(0f);
 
-			@Override
-			public void onAnimationEnd(final Animator animation) {
-				animate(progress, this);
-			}
-
-			@Override
-			public void onAnimationRepeat(final Animator animation) {
-			}
-
-			@Override
-			public void onAnimationStart(final Animator animation) {
 			}
 		});
+
+		mOne = (Button) findViewById(R.id.one);
+		mOne.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				animate(mHoloCircularProgressBar, null, 1f, 1000);
+				mHoloCircularProgressBar.setMarkerProgress(1f);
+
+			}
+		});
+
+		mAutoAnimateSwitch = (Switch) findViewById(R.id.auto_animate_switch);
+		mAutoAnimateSwitch.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				if (isChecked) {
+
+					mOne.setEnabled(false);
+					mZero.setEnabled(false);
+
+					animate(mHoloCircularProgressBar, new AnimatorListener() {
+
+						@Override
+						public void onAnimationCancel(final Animator animation) {
+							animation.end();
+						}
+
+						@Override
+						public void onAnimationEnd(final Animator animation) {
+							if (!mAnimationHasEnded) {
+								animate(mHoloCircularProgressBar, this);
+							} else {
+								mAnimationHasEnded = false;
+							}
+						}
+
+						@Override
+						public void onAnimationRepeat(final Animator animation) {
+						}
+
+						@Override
+						public void onAnimationStart(final Animator animation) {
+						}
+					});
+				} else {
+					mAnimationHasEnded = true;
+					mProgressBarAnimator.cancel();
+
+					mOne.setEnabled(true);
+					mZero.setEnabled(true);
+				}
+
+			}
+		});
+
 	}
 
 	/**
@@ -86,14 +147,19 @@ public class CircularProgressBarSample extends Activity {
 	 * @param listener
 	 *            the listener
 	 */
-	private void animate(final HoloCircularProgressBar progressBar,
-			final AnimatorListener listener) {
+	private void animate(final HoloCircularProgressBar progressBar, final AnimatorListener listener) {
 		final float progress = (float) (Math.random() * 2);
-		final ObjectAnimator progressBarAnimator = ObjectAnimator.ofFloat(
-				progressBar, "progress", progress);
-		progressBarAnimator.setDuration(3000);
+		int duration = 3000;
+		animate(progressBar, listener, progress, duration);
+	}
 
-		progressBarAnimator.addListener(new AnimatorListener() {
+	private void animate(final HoloCircularProgressBar progressBar, final AnimatorListener listener,
+			final float progress, final int duration) {
+
+		mProgressBarAnimator = ObjectAnimator.ofFloat(progressBar, "progress", progress);
+		mProgressBarAnimator.setDuration(duration);
+
+		mProgressBarAnimator.addListener(new AnimatorListener() {
 
 			@Override
 			public void onAnimationCancel(final Animator animation) {
@@ -112,9 +178,11 @@ public class CircularProgressBarSample extends Activity {
 			public void onAnimationStart(final Animator animation) {
 			}
 		});
-		progressBarAnimator.addListener(listener);
-		progressBarAnimator.reverse();
-		progressBarAnimator.addUpdateListener(new AnimatorUpdateListener() {
+		if (listener != null){
+			mProgressBarAnimator.addListener(listener);
+		}
+		mProgressBarAnimator.reverse();
+		mProgressBarAnimator.addUpdateListener(new AnimatorUpdateListener() {
 
 			@Override
 			public void onAnimationUpdate(final ValueAnimator animation) {
@@ -122,7 +190,7 @@ public class CircularProgressBarSample extends Activity {
 			}
 		});
 		progressBar.setMarkerProgress(progress);
-		progressBarAnimator.start();
+		mProgressBarAnimator.start();
 	}
 
 	/*

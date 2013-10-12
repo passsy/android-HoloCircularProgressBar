@@ -24,4 +24,29 @@
         android:layout_alignParentRight="true"
         android:text="@string/switch_theme" />
 
+    <Button
+        android:id="@+id/zero"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:text="0" />
+
+    <Button
+        android:id="@+id/one"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/zero"
+        android:layout_alignBottom="@+id/zero"
+        android:layout_toRightOf="@+id/zero"
+        android:text="1" />
+
+    <Switch
+        android:id="@+id/auto_animate_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/holoCircularProgressBar1"
+        android:text="Auto animation" />
+
 </RelativeLayout>
