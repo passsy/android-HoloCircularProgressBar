@@ -75,6 +75,9 @@ public class CircularProgressBarSample extends Activity {
 
 			@Override
 			public void onClick(View v) {
+				if (mProgressBarAnimator != null) {
+					mProgressBarAnimator.cancel();
+				}
 				animate(mHoloCircularProgressBar, null, 0f, 1000);
 				mHoloCircularProgressBar.setMarkerProgress(0f);
 
@@ -86,6 +89,9 @@ public class CircularProgressBarSample extends Activity {
 
 			@Override
 			public void onClick(View v) {
+				if (mProgressBarAnimator != null) {
+					mProgressBarAnimator.cancel();
+				}
 				animate(mHoloCircularProgressBar, null, 1f, 1000);
 				mHoloCircularProgressBar.setMarkerProgress(1f);
 
@@ -178,7 +184,7 @@ public class CircularProgressBarSample extends Activity {
 			public void onAnimationStart(final Animator animation) {
 			}
 		});
-		if (listener != null){
+		if (listener != null) {
 			mProgressBarAnimator.addListener(listener);
 		}
 		mProgressBarAnimator.reverse();
