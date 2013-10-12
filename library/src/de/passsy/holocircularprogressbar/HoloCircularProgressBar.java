@@ -3,6 +3,7 @@
  */
 package de.passsy.holocircularprogressbar;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -173,6 +174,8 @@ public class HoloCircularProgressBar extends View {
 	 */
 	private boolean mOverrdraw = false;
 
+	private final RectF mSquareRect = new RectF();
+
 	/**
 	 * Instantiates a new holo circular progress bar.
 	 * 
@@ -191,7 +194,8 @@ public class HoloCircularProgressBar extends View {
 	 * @param attrs
 	 *            the attrs
 	 */
-	public HoloCircularProgressBar(final Context context, final AttributeSet attrs) {
+	public HoloCircularProgressBar(final Context context,
+			final AttributeSet attrs) {
 		this(context, attrs, R.attr.circularProgressBarStyle);
 	}
 
@@ -205,20 +209,27 @@ public class HoloCircularProgressBar extends View {
 	 * @param defStyle
 	 *            the def style
 	 */
-	public HoloCircularProgressBar(final Context context, final AttributeSet attrs, final int defStyle) {
+	public HoloCircularProgressBar(final Context context,
+			final AttributeSet attrs, final int defStyle) {
 		super(context, attrs, defStyle);
 
 		// load the styled attributes and set their properties
-		final TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.HoloCircularProgressBar,
-				defStyle, 0);
+		final TypedArray attributes = context.obtainStyledAttributes(attrs,
+				R.styleable.HoloCircularProgressBar, defStyle, 0);
 
-		setProgressColor(attributes.getColor(R.styleable.HoloCircularProgressBar_progress_color, Color.CYAN));
-		setProgressBackgroundColor(attributes.getColor(R.styleable.HoloCircularProgressBar_progress_background_color,
+		setProgressColor(attributes.getColor(
+				R.styleable.HoloCircularProgressBar_progress_color, Color.CYAN));
+		setProgressBackgroundColor(attributes.getColor(
+				R.styleable.HoloCircularProgressBar_progress_background_color,
 				Color.MAGENTA));
-		setProgress(attributes.getFloat(R.styleable.HoloCircularProgressBar_progress, 0.0f));
-		setMarkerProgress(attributes.getFloat(R.styleable.HoloCircularProgressBar_marker_progress, 0.0f));
-		setWheelSize((int) attributes.getDimension(R.styleable.HoloCircularProgressBar_stroke_width, 10));
-		mGravity = attributes.getInt(R.styleable.HoloCircularProgressBar_gravity, Gravity.CENTER);
+		setProgress(attributes.getFloat(
+				R.styleable.HoloCircularProgressBar_progress, 0.0f));
+		setMarkerProgress(attributes.getFloat(
+				R.styleable.HoloCircularProgressBar_marker_progress, 0.0f));
+		setWheelSize((int) attributes.getDimension(
+				R.styleable.HoloCircularProgressBar_stroke_width, 10));
+		mGravity = attributes.getInt(
+				R.styleable.HoloCircularProgressBar_gravity, Gravity.CENTER);
 
 		attributes.recycle();
 
@@ -249,7 +260,9 @@ public class HoloCircularProgressBar extends View {
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see android.view.View#onDraw(android.graphics.Canvas)
 	 */
 	@Override
@@ -264,11 +277,13 @@ public class HoloCircularProgressBar extends View {
 
 		// draw the background
 		if (!mOverrdraw) {
-			canvas.drawArc(mCircleBounds, 270, -(360 - progressRotation), false, mBackgroundColorPaint);
+			canvas.drawArc(mCircleBounds, 270, -(360 - progressRotation),
+					false, mBackgroundColorPaint);
 		}
 
 		// draw the progress or a full circle if overdraw is true
-		canvas.drawArc(mCircleBounds, 270, mOverrdraw ? 360 : progressRotation, false, mProgressColorPaint);
+		canvas.drawArc(mCircleBounds, 270, mOverrdraw ? 360 : progressRotation,
+				false, mProgressColorPaint);
 
 		// draw the marker at the correct rotated position
 		if (mIsMarkerEnabled) {
@@ -276,8 +291,9 @@ public class HoloCircularProgressBar extends View {
 
 			canvas.save();
 			canvas.rotate(markerRotation - 90);
-			canvas.drawLine((float) (mThumbPosX + mThumbRadius / 2 * 1.4), mThumbPosY,
-					(float) (mThumbPosX - mThumbRadius / 2 * 1.4), mThumbPosY, mMarkerColorPaint);
+			canvas.drawLine((float) (mThumbPosX + mThumbRadius / 2 * 1.4),
+					mThumbPosY, (float) (mThumbPosX - mThumbRadius / 2 * 1.4),
+					mThumbPosY, mMarkerColorPaint);
 			canvas.restore();
 		}
 
@@ -286,22 +302,26 @@ public class HoloCircularProgressBar extends View {
 		canvas.rotate(progressRotation - 90);
 		// rotate the square by 45 degrees
 		canvas.rotate(45, mThumbPosX, mThumbPosY);
-		final RectF rect = new RectF();
-		rect.left = mThumbPosX - mThumbRadius / 3;
-		rect.right = mThumbPosX + mThumbRadius / 3;
-		rect.top = mThumbPosY - mThumbRadius / 3;
-		rect.bottom = mThumbPosY + mThumbRadius / 3;
-		canvas.drawRect(rect, mThumbColorPaint);
+		mSquareRect.left = mThumbPosX - mThumbRadius / 3;
+		mSquareRect.right = mThumbPosX + mThumbRadius / 3;
+		mSquareRect.top = mThumbPosY - mThumbRadius / 3;
+		mSquareRect.bottom = mThumbPosY + mThumbRadius / 3;
+		canvas.drawRect(mSquareRect, mThumbColorPaint);
 		canvas.restore();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see android.view.View#onMeasure(int, int)
 	 */
 	@Override
-	protected void onMeasure(final int widthMeasureSpec, final int heightMeasureSpec) {
-		final int height = getDefaultSize(getSuggestedMinimumHeight(), heightMeasureSpec);
-		final int width = getDefaultSize(getSuggestedMinimumWidth(), widthMeasureSpec);
+	protected void onMeasure(final int widthMeasureSpec,
+			final int heightMeasureSpec) {
+		final int height = getDefaultSize(getSuggestedMinimumHeight(),
+				heightMeasureSpec);
+		final int width = getDefaultSize(getSuggestedMinimumWidth(),
+				widthMeasureSpec);
 		final int min = Math.min(width, height);
 		setMeasuredDimension(min, height);
 
@@ -319,7 +339,9 @@ public class HoloCircularProgressBar extends View {
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see android.view.View#onRestoreInstanceState(android.os.Parcelable)
 	 */
 	@Override
@@ -328,20 +350,24 @@ public class HoloCircularProgressBar extends View {
 			final Bundle bundle = (Bundle) state;
 			setProgress(bundle.getFloat(INSTNACE_STATE_PROGRESS));
 			setMarkerProgress(bundle.getFloat(INSTNACE_STATE_MARKER_PROGRESS));
-			super.onRestoreInstanceState(bundle.getParcelable(INSTNACE_STATE_SAVEDSTATE));
+			super.onRestoreInstanceState(bundle
+					.getParcelable(INSTNACE_STATE_SAVEDSTATE));
 			return;
 		}
 
 		super.onRestoreInstanceState(state);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see android.view.View#onSaveInstanceState()
 	 */
 	@Override
 	protected Parcelable onSaveInstanceState() {
 		final Bundle bundle = new Bundle();
-		bundle.putParcelable(INSTNACE_STATE_SAVEDSTATE, super.onSaveInstanceState());
+		bundle.putParcelable(INSTNACE_STATE_SAVEDSTATE,
+				super.onSaveInstanceState());
 		bundle.putFloat(INSTNACE_STATE_PROGRESS, mProgress);
 		bundle.putFloat(INSTNACE_STATE_MARKER_PROGRESS, mMarkerProgress);
 		return bundle;
@@ -349,24 +375,29 @@ public class HoloCircularProgressBar extends View {
 
 	/**
 	 * Compute insets.
-	 * _______________________
+	 * 
+	 * <pre>
+	 *  ______________________
 	 * |_________dx/2_________|
-	 * |......|.´''''`.|......|
+	 * |......| /'''''\|......|
 	 * |-dx/2-|| View ||-dx/2-|
-	 * |______|`.____.´|______|
+	 * |______| \_____/|______|
 	 * |________ dx/2_________|
+	 * </pre>
 	 * 
 	 * @param dx
 	 *            the dx the horizontal unfilled space
 	 * @param dy
 	 *            the dy the horizontal unfilled space
 	 */
+	@SuppressLint("NewApi")
 	private void computeInsets(final int dx, final int dy) {
 		final int layoutDirection;
 		int absoluteGravity = mGravity;
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
 			layoutDirection = getLayoutDirection();
-			absoluteGravity = Gravity.getAbsoluteGravity(mGravity, layoutDirection);
+			absoluteGravity = Gravity.getAbsoluteGravity(mGravity,
+					layoutDirection);
 		}
 
 		switch (absoluteGravity & Gravity.HORIZONTAL_GRAVITY_MASK) {
@@ -493,12 +524,18 @@ public class HoloCircularProgressBar extends View {
 			return;
 		}
 
-		mProgress = progress % 1.0f;
-
-		if (progress >= 1) {
-			mOverrdraw = true;
-		} else {
+		if (progress == 1) {
 			mOverrdraw = false;
+			mProgress = 1;
+		} else {
+
+			if (progress >= 1) {
+				mOverrdraw = true;
+			} else {
+				mOverrdraw = false;
+			}
+
+			mProgress = progress % 1.0f;
 		}
 
 		if (!mIsInitializing) {
