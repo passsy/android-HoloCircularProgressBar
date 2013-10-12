@@ -27,7 +27,9 @@ public class CircularProgressBarSample extends Activity {
 	 */
 	private Button mSwitchButton;
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
 	 */
 	@Override
@@ -84,9 +86,11 @@ public class CircularProgressBarSample extends Activity {
 	 * @param listener
 	 *            the listener
 	 */
-	private void animate(final HoloCircularProgressBar progressBar, final AnimatorListener listener) {
+	private void animate(final HoloCircularProgressBar progressBar,
+			final AnimatorListener listener) {
 		final float progress = (float) (Math.random() * 2);
-		final ObjectAnimator progressBarAnimator = ObjectAnimator.ofFloat(progressBar, "progress", progress);
+		final ObjectAnimator progressBarAnimator = ObjectAnimator.ofFloat(
+				progressBar, "progress", progress);
 		progressBarAnimator.setDuration(3000);
 
 		progressBarAnimator.addListener(new AnimatorListener() {
@@ -121,7 +125,9 @@ public class CircularProgressBarSample extends Activity {
 		progressBarAnimator.start();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
 	 */
 	@Override
