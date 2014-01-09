@@ -609,7 +609,8 @@ public class HoloCircularProgressBar extends View {
 	 */
 	public void setProgressBackgroundColor(final int color) {
 		mProgressBackgroundColor = color;
-
+        
+        updateMarkerColor();
 		updateBackgroundColor();
 	}
 
