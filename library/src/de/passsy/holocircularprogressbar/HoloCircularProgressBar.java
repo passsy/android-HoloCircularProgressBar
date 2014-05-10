@@ -35,27 +35,27 @@ public class HoloCircularProgressBar extends View {
 	/**
 	 * used to save the super state on configuration change
 	 */
-	private static final String INSTNACE_STATE_SAVEDSTATE = "saved_state";
+	private static final String INSTANCE_STATE_SAVEDSTATE = "saved_state";
 
 	/**
 	 * used to save the progress on configuration changes
 	 */
-	private static final String INSTNACE_STATE_PROGRESS = "progress";
+	private static final String INSTANCE_STATE_PROGRESS = "progress";
 
 	/**
 	 * used to save the marker progress on configuration changes
 	 */
-	private static final String INSTNACE_STATE_MARKER_PROGRESS = "marker_progress";
+	private static final String INSTANCE_STATE_MARKER_PROGRESS = "marker_progress";
 
 	/**
 	 * used to save the background color of the progress
 	 */
-	private static final String INSTNACE_STATE_PROGRESS_BACKGROUND_COLOR = "progress_background_color";
+	private static final String INSTANCE_STATE_PROGRESS_BACKGROUND_COLOR = "progress_background_color";
 
 	/**
 	 * used to save the color of the progress
 	 */
-	private static final String INSTNACE_STATE_PROGRESS_COLOR = "progress_color";
+	private static final String INSTANCE_STATE_PROGRESS_COLOR = "progress_color";
 
 	/**
 	 * true if not all properties are set. then the view isn't drawn and there
@@ -345,22 +345,22 @@ public class HoloCircularProgressBar extends View {
 	protected void onRestoreInstanceState(final Parcelable state) {
 		if (state instanceof Bundle) {
 			final Bundle bundle = (Bundle) state;
-			setProgress(bundle.getFloat(INSTNACE_STATE_PROGRESS));
-			setMarkerProgress(bundle.getFloat(INSTNACE_STATE_MARKER_PROGRESS));
+			setProgress(bundle.getFloat(INSTANCE_STATE_PROGRESS));
+			setMarkerProgress(bundle.getFloat(INSTANCE_STATE_MARKER_PROGRESS));
 
-			final int progressColor = bundle.getInt(INSTNACE_STATE_PROGRESS_COLOR);
+			final int progressColor = bundle.getInt(INSTANCE_STATE_PROGRESS_COLOR);
 			if (progressColor != mProgressColor) {
 				mProgressColor = progressColor;
 				updateProgressColor();
 			}
 
-			final int progressBackgroundColor = bundle.getInt(INSTNACE_STATE_PROGRESS_BACKGROUND_COLOR);
+			final int progressBackgroundColor = bundle.getInt(INSTANCE_STATE_PROGRESS_BACKGROUND_COLOR);
 			if (progressBackgroundColor != mProgressBackgroundColor) {
 				mProgressBackgroundColor = progressBackgroundColor;
 				updateBackgroundColor();
 			}
 
-			super.onRestoreInstanceState(bundle.getParcelable(INSTNACE_STATE_SAVEDSTATE));
+			super.onRestoreInstanceState(bundle.getParcelable(INSTANCE_STATE_SAVEDSTATE));
 			return;
 		}
 
@@ -375,11 +375,11 @@ public class HoloCircularProgressBar extends View {
 	@Override
 	protected Parcelable onSaveInstanceState() {
 		final Bundle bundle = new Bundle();
-		bundle.putParcelable(INSTNACE_STATE_SAVEDSTATE, super.onSaveInstanceState());
-		bundle.putFloat(INSTNACE_STATE_PROGRESS, mProgress);
-		bundle.putFloat(INSTNACE_STATE_MARKER_PROGRESS, mMarkerProgress);
-		bundle.putInt(INSTNACE_STATE_PROGRESS_COLOR, mProgressColor);
-		bundle.putInt(INSTNACE_STATE_PROGRESS_BACKGROUND_COLOR, mProgressBackgroundColor);
+		bundle.putParcelable(INSTANCE_STATE_SAVEDSTATE, super.onSaveInstanceState());
+		bundle.putFloat(INSTANCE_STATE_PROGRESS, mProgress);
+		bundle.putFloat(INSTANCE_STATE_MARKER_PROGRESS, mMarkerProgress);
+		bundle.putInt(INSTANCE_STATE_PROGRESS_COLOR, mProgressColor);
+		bundle.putInt(INSTANCE_STATE_PROGRESS_BACKGROUND_COLOR, mProgressBackgroundColor);
 		return bundle;
 	}
 
