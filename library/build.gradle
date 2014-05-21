@@ -13,8 +13,8 @@ targetCompatibility = 1.6
 android {
 
 
-    compileSdkVersion 18
-    buildToolsVersion '18.1'
+    compileSdkVersion 19
+    buildToolsVersion '19.0.3'
 
     defaultConfig {
         minSdkVersion 7
@@ -26,7 +26,7 @@ android {
             manifest.srcFile 'AndroidManifest.xml'
             resources.srcDirs = ['src']
             res.srcDirs = ['res']
-
+            java.srcDirs = ['src']
         }
     }
 }
