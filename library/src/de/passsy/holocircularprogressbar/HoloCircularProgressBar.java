@@ -138,7 +138,7 @@ public class HoloCircularProgressBar extends View {
 	 * 
 	 * {@link #computeInsets(int, int)}
 	 */
-	private final int mGravity;
+	private int mGravity = Gravity.CENTER;
 
 	/**
 	 * The Horizontal inset calcualted in {@link #computeInsets(int, int)}
@@ -234,19 +234,28 @@ public class HoloCircularProgressBar extends View {
 		// load the styled attributes and set their properties
 		final TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.HoloCircularProgressBar,
 				defStyle, 0);
+        if (attributes != null) {
 
-		setProgressColor(attributes.getColor(R.styleable.HoloCircularProgressBar_progress_color, Color.CYAN));
-		setProgressBackgroundColor(attributes.getColor(R.styleable.HoloCircularProgressBar_progress_background_color,
-				Color.MAGENTA));
-		setProgress(attributes.getFloat(R.styleable.HoloCircularProgressBar_progress, 0.0f));
-		setMarkerProgress(attributes.getFloat(R.styleable.HoloCircularProgressBar_marker_progress, 0.0f));
-		setWheelSize((int) attributes.getDimension(R.styleable.HoloCircularProgressBar_stroke_width, 10));
-		mIsThumbEnabled = attributes.getBoolean(R.styleable.HoloCircularProgressBar_thumb_visible, true);
-		mIsMarkerEnabled = attributes.getBoolean(R.styleable.HoloCircularProgressBar_marker_visible, true);
+            setProgressColor(attributes
+                    .getColor(R.styleable.HoloCircularProgressBar_progress_color, Color.CYAN));
+            setProgressBackgroundColor(attributes
+                    .getColor(R.styleable.HoloCircularProgressBar_progress_background_color,
+                            Color.GREEN));
+            setProgress(attributes.getFloat(R.styleable.HoloCircularProgressBar_progress, 0.0f));
+            setMarkerProgress(
+                    attributes.getFloat(R.styleable.HoloCircularProgressBar_marker_progress, 0.0f));
+            setWheelSize((int) attributes
+                    .getDimension(R.styleable.HoloCircularProgressBar_stroke_width, 10));
+            mIsThumbEnabled = attributes
+                    .getBoolean(R.styleable.HoloCircularProgressBar_thumb_visible, true);
+            mIsMarkerEnabled = attributes
+                    .getBoolean(R.styleable.HoloCircularProgressBar_marker_visible, true);
 
-		mGravity = attributes.getInt(R.styleable.HoloCircularProgressBar_android_gravity, Gravity.CENTER);
+            mGravity = attributes
+                    .getInt(R.styleable.HoloCircularProgressBar_android_gravity, Gravity.CENTER);
 
-		attributes.recycle();
+            attributes.recycle();
+        }
 
 		mThumbRadius = mCircleStrokeWidth * 2;
 
@@ -507,7 +516,7 @@ public class HoloCircularProgressBar extends View {
 	}
 
 	/**
-	 * similar to {@link getProgress}
+	 * similar to {@link #getProgress}
 	 * 
 	 * @return
 	 */
