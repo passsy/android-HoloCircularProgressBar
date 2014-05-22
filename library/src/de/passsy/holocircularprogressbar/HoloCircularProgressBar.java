@@ -35,27 +35,37 @@ public class HoloCircularProgressBar extends View {
 	/**
 	 * used to save the super state on configuration change
 	 */
-	private static final String INSTNACE_STATE_SAVEDSTATE = "saved_state";
+	private static final String INSTANCE_STATE_SAVEDSTATE = "saved_state";
 
 	/**
 	 * used to save the progress on configuration changes
 	 */
-	private static final String INSTNACE_STATE_PROGRESS = "progress";
+	private static final String INSTANCE_STATE_PROGRESS = "progress";
 
 	/**
 	 * used to save the marker progress on configuration changes
 	 */
-	private static final String INSTNACE_STATE_MARKER_PROGRESS = "marker_progress";
+	private static final String INSTANCE_STATE_MARKER_PROGRESS = "marker_progress";
 
 	/**
 	 * used to save the background color of the progress
 	 */
-	private static final String INSTNACE_STATE_PROGRESS_BACKGROUND_COLOR = "progress_background_color";
+	private static final String INSTANCE_STATE_PROGRESS_BACKGROUND_COLOR = "progress_background_color";
 
 	/**
 	 * used to save the color of the progress
 	 */
-	private static final String INSTNACE_STATE_PROGRESS_COLOR = "progress_color";
+	private static final String INSTANCE_STATE_PROGRESS_COLOR = "progress_color";
+
+	/**
+	 * used to save and restore the visibility of the thumb in this instance
+	 */
+	private static final String INSTANCE_STATE_THUMB_VISIBLE = "thumb_visible";
+
+	/**
+	 * used to save and restore the visibility of the marker in this instance
+	 */
+	private static final String INSTANCE_STATE_MARKER_VISIBLE = "marker_visible";
 
 	/**
 	 * true if not all properties are set. then the view isn't drawn and there
@@ -270,128 +280,6 @@ public class HoloCircularProgressBar extends View {
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.view.View#onDraw(android.graphics.Canvas)
-	 */
-	@Override
-	protected void onDraw(final Canvas canvas) {
-
-		// All of our positions are using our internal coordinate system.
-		// Instead of translating
-		// them we let Canvas do the work for us.
-		canvas.translate(mTranslationOffsetX, mTranslationOffsetY);
-
-		final float progressRotation = getCurrentRotation();
-
-		// draw the background
-		if (!mOverrdraw) {
-			canvas.drawArc(mCircleBounds, 270, -(360 - progressRotation), false, mBackgroundColorPaint);
-		}
-
-		// draw the progress or a full circle if overdraw is true
-		canvas.drawArc(mCircleBounds, 270, mOverrdraw ? 360 : progressRotation, false, mProgressColorPaint);
-
-		// draw the marker at the correct rotated position
-		if (mIsMarkerEnabled) {
-			final float markerRotation = getMarkerRotation();
-
-			canvas.save();
-			canvas.rotate(markerRotation - 90);
-			canvas.drawLine((float) (mThumbPosX + mThumbRadius / 2 * 1.4), mThumbPosY,
-					(float) (mThumbPosX - mThumbRadius / 2 * 1.4), mThumbPosY, mMarkerColorPaint);
-			canvas.restore();
-		}
-
-		if (isThumbEnabled()) {
-			// draw the thumb square at the correct rotated position
-			canvas.save();
-			canvas.rotate(progressRotation - 90);
-			// rotate the square by 45 degrees
-			canvas.rotate(45, mThumbPosX, mThumbPosY);
-			mSquareRect.left = mThumbPosX - mThumbRadius / 3;
-			mSquareRect.right = mThumbPosX + mThumbRadius / 3;
-			mSquareRect.top = mThumbPosY - mThumbRadius / 3;
-			mSquareRect.bottom = mThumbPosY + mThumbRadius / 3;
-			canvas.drawRect(mSquareRect, mThumbColorPaint);
-			canvas.restore();
-		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.view.View#onMeasure(int, int)
-	 */
-	@Override
-	protected void onMeasure(final int widthMeasureSpec, final int heightMeasureSpec) {
-		final int height = getDefaultSize(getSuggestedMinimumHeight(), heightMeasureSpec);
-		final int width = getDefaultSize(getSuggestedMinimumWidth(), widthMeasureSpec);
-		final int min = Math.min(width, height);
-		setMeasuredDimension(min, height);
-
-		final float halfWidth = min * 0.5f;
-		mRadius = halfWidth - mThumbRadius;
-
-		mCircleBounds.set(-mRadius, -mRadius, mRadius, mRadius);
-
-		mThumbPosX = (float) (mRadius * Math.cos(0));
-		mThumbPosY = (float) (mRadius * Math.sin(0));
-		computeInsets(width - min, height - min);
-
-		mTranslationOffsetX = halfWidth + mHorizontalInset;
-		mTranslationOffsetY = halfWidth + mVerticalInset;
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.view.View#onRestoreInstanceState(android.os.Parcelable)
-	 */
-	@Override
-	protected void onRestoreInstanceState(final Parcelable state) {
-		if (state instanceof Bundle) {
-			final Bundle bundle = (Bundle) state;
-			setProgress(bundle.getFloat(INSTNACE_STATE_PROGRESS));
-			setMarkerProgress(bundle.getFloat(INSTNACE_STATE_MARKER_PROGRESS));
-
-			final int progressColor = bundle.getInt(INSTNACE_STATE_PROGRESS_COLOR);
-			if (progressColor != mProgressColor) {
-				mProgressColor = progressColor;
-				updateProgressColor();
-			}
-
-			final int progressBackgroundColor = bundle.getInt(INSTNACE_STATE_PROGRESS_BACKGROUND_COLOR);
-			if (progressBackgroundColor != mProgressBackgroundColor) {
-				mProgressBackgroundColor = progressBackgroundColor;
-				updateBackgroundColor();
-			}
-
-			super.onRestoreInstanceState(bundle.getParcelable(INSTNACE_STATE_SAVEDSTATE));
-			return;
-		}
-
-		super.onRestoreInstanceState(state);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.view.View#onSaveInstanceState()
-	 */
-	@Override
-	protected Parcelable onSaveInstanceState() {
-		final Bundle bundle = new Bundle();
-		bundle.putParcelable(INSTNACE_STATE_SAVEDSTATE, super.onSaveInstanceState());
-		bundle.putFloat(INSTNACE_STATE_PROGRESS, mProgress);
-		bundle.putFloat(INSTNACE_STATE_MARKER_PROGRESS, mMarkerProgress);
-		bundle.putInt(INSTNACE_STATE_PROGRESS_COLOR, mProgressColor);
-		bundle.putInt(INSTNACE_STATE_PROGRESS_BACKGROUND_COLOR, mProgressBackgroundColor);
-		return bundle;
-	}
-
 	/**
 	 * Compute insets.
 	 * 
@@ -454,6 +342,15 @@ public class HoloCircularProgressBar extends View {
 	}
 
 	/**
+	 * similar to {@link #getProgress}
+	 * 
+	 * @return
+	 */
+	public float getMarkerProgress() {
+		return mMarkerProgress;
+	}
+
+	/**
 	 * Gets the marker rotation.
 	 * 
 	 * @return the marker rotation
@@ -461,67 +358,6 @@ public class HoloCircularProgressBar extends View {
 	private float getMarkerRotation() {
 
 		return 360 * mMarkerProgress;
-	}
-
-	/**
-	 * Sets the wheel size.
-	 * 
-	 * @param dimension
-	 *            the new wheel size
-	 */
-	private void setWheelSize(final int dimension) {
-		mCircleStrokeWidth = dimension;
-	}
-
-	/**
-	 * updates the paint of the background
-	 */
-	private void updateBackgroundColor() {
-		mBackgroundColorPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-		mBackgroundColorPaint.setColor(mProgressBackgroundColor);
-		mBackgroundColorPaint.setStyle(Paint.Style.STROKE);
-		mBackgroundColorPaint.setStrokeWidth(mCircleStrokeWidth);
-
-		invalidate();
-	}
-
-	/**
-	 * updates the paint of the marker
-	 */
-	private void updateMarkerColor() {
-		mMarkerColorPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-		mMarkerColorPaint.setColor(mProgressBackgroundColor);
-		mMarkerColorPaint.setStyle(Paint.Style.STROKE);
-		mMarkerColorPaint.setStrokeWidth(mCircleStrokeWidth / 2);
-
-		invalidate();
-	}
-
-	/**
-	 * updates the paint of the progress and the thumb to give them a new visual
-	 * style
-	 */
-	private void updateProgressColor() {
-		mProgressColorPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-		mProgressColorPaint.setColor(mProgressColor);
-		mProgressColorPaint.setStyle(Paint.Style.STROKE);
-		mProgressColorPaint.setStrokeWidth(mCircleStrokeWidth);
-
-		mThumbColorPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-		mThumbColorPaint.setColor(mProgressColor);
-		mThumbColorPaint.setStyle(Paint.Style.FILL_AND_STROKE);
-		mThumbColorPaint.setStrokeWidth(mCircleStrokeWidth);
-
-		invalidate();
-	}
-
-	/**
-	 * similar to {@link #getProgress}
-	 * 
-	 * @return
-	 */
-	public float getMarkerProgress() {
-		return mMarkerProgress;
 	}
 
 	/**
@@ -557,6 +393,136 @@ public class HoloCircularProgressBar extends View {
 	 */
 	public boolean isThumbEnabled() {
 		return mIsThumbEnabled;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see android.view.View#onDraw(android.graphics.Canvas)
+	 */
+	@Override
+	protected void onDraw(final Canvas canvas) {
+
+		// All of our positions are using our internal coordinate system.
+		// Instead of translating
+		// them we let Canvas do the work for us.
+		canvas.translate(mTranslationOffsetX, mTranslationOffsetY);
+
+		final float progressRotation = getCurrentRotation();
+
+		// draw the background
+		if (!mOverrdraw) {
+			canvas.drawArc(mCircleBounds, 270, -(360 - progressRotation), false, mBackgroundColorPaint);
+		}
+
+		// draw the progress or a full circle if overdraw is true
+		canvas.drawArc(mCircleBounds, 270, mOverrdraw ? 360 : progressRotation, false, mProgressColorPaint);
+
+		// draw the marker at the correct rotated position
+		if (mIsMarkerEnabled) {
+			final float markerRotation = getMarkerRotation();
+
+			canvas.save();
+			canvas.rotate(markerRotation - 90);
+			canvas.drawLine((float) (mThumbPosX + mThumbRadius / 2 * 1.4), mThumbPosY,
+					(float) (mThumbPosX - mThumbRadius / 2 * 1.4), mThumbPosY, mMarkerColorPaint);
+			canvas.restore();
+		}
+
+		if (isThumbEnabled()) {
+			// draw the thumb square at the correct rotated position
+			canvas.save();
+			canvas.rotate(progressRotation - 90);
+			// rotate the square by 45 degrees
+			canvas.rotate(45, mThumbPosX, mThumbPosY);
+			mSquareRect.left = mThumbPosX - mThumbRadius / 3;
+			mSquareRect.right = mThumbPosX + mThumbRadius / 3;
+			mSquareRect.top = mThumbPosY - mThumbRadius / 3;
+			mSquareRect.bottom = mThumbPosY + mThumbRadius / 3;
+			canvas.drawRect(mSquareRect, mThumbColorPaint);
+			canvas.restore();
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see android.view.View#onMeasure(int, int)
+	 */
+	@Override
+	protected void onMeasure(final int widthMeasureSpec, final int heightMeasureSpec) {
+		final int height = getDefaultSize(getSuggestedMinimumHeight() + getPaddingTop() + getPaddingBottom(),
+				heightMeasureSpec);
+		final int width = getDefaultSize(getSuggestedMinimumWidth() + getPaddingLeft() + getPaddingRight(),
+				widthMeasureSpec);
+		final int min = Math.min(width, height);
+		setMeasuredDimension(min, height);
+
+		final float halfWidth = min * 0.5f;
+		mRadius = halfWidth - mThumbRadius;
+
+		mCircleBounds.set(-mRadius, -mRadius, mRadius, mRadius);
+
+		mThumbPosX = (float) (mRadius * Math.cos(0));
+		mThumbPosY = (float) (mRadius * Math.sin(0));
+		computeInsets(width - min, height - min);
+
+		mTranslationOffsetX = halfWidth + mHorizontalInset;
+		mTranslationOffsetY = halfWidth + mVerticalInset;
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see android.view.View#onRestoreInstanceState(android.os.Parcelable)
+	 */
+	@Override
+	protected void onRestoreInstanceState(final Parcelable state) {
+		if (state instanceof Bundle) {
+			final Bundle bundle = (Bundle) state;
+			setProgress(bundle.getFloat(INSTANCE_STATE_PROGRESS));
+			setMarkerProgress(bundle.getFloat(INSTANCE_STATE_MARKER_PROGRESS));
+
+			final int progressColor = bundle.getInt(INSTANCE_STATE_PROGRESS_COLOR);
+			if (progressColor != mProgressColor) {
+				mProgressColor = progressColor;
+				updateProgressColor();
+			}
+
+			final int progressBackgroundColor = bundle.getInt(INSTANCE_STATE_PROGRESS_BACKGROUND_COLOR);
+			if (progressBackgroundColor != mProgressBackgroundColor) {
+				mProgressBackgroundColor = progressBackgroundColor;
+				updateBackgroundColor();
+			}
+
+			mIsThumbEnabled = bundle.getBoolean(INSTANCE_STATE_THUMB_VISIBLE);
+
+			mIsMarkerEnabled = bundle.getBoolean(INSTANCE_STATE_MARKER_VISIBLE);
+
+			super.onRestoreInstanceState(bundle.getParcelable(INSTANCE_STATE_SAVEDSTATE));
+			return;
+		}
+
+		super.onRestoreInstanceState(state);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see android.view.View#onSaveInstanceState()
+	 */
+	@Override
+	protected Parcelable onSaveInstanceState() {
+		final Bundle bundle = new Bundle();
+		bundle.putParcelable(INSTANCE_STATE_SAVEDSTATE, super.onSaveInstanceState());
+		bundle.putFloat(INSTANCE_STATE_PROGRESS, mProgress);
+		bundle.putFloat(INSTANCE_STATE_MARKER_PROGRESS, mMarkerProgress);
+		bundle.putInt(INSTANCE_STATE_PROGRESS_COLOR, mProgressColor);
+		bundle.putInt(INSTANCE_STATE_PROGRESS_BACKGROUND_COLOR, mProgressBackgroundColor);
+		bundle.putBoolean(INSTANCE_STATE_THUMB_VISIBLE, mIsThumbEnabled);
+		bundle.putBoolean(INSTANCE_STATE_MARKER_VISIBLE, mIsMarkerEnabled);
+		return bundle;
 	}
 
 	/**
@@ -619,6 +585,7 @@ public class HoloCircularProgressBar extends View {
 	public void setProgressBackgroundColor(final int color) {
 		mProgressBackgroundColor = color;
 
+		updateMarkerColor();
 		updateBackgroundColor();
 	}
 
@@ -636,6 +603,58 @@ public class HoloCircularProgressBar extends View {
 
 	public void setThumbEnabled(final boolean enabled) {
 		mIsThumbEnabled = enabled;
+	}
+
+	/**
+	 * Sets the wheel size.
+	 * 
+	 * @param dimension
+	 *            the new wheel size
+	 */
+	private void setWheelSize(final int dimension) {
+		mCircleStrokeWidth = dimension;
+	}
+
+	/**
+	 * updates the paint of the background
+	 */
+	private void updateBackgroundColor() {
+		mBackgroundColorPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+		mBackgroundColorPaint.setColor(mProgressBackgroundColor);
+		mBackgroundColorPaint.setStyle(Paint.Style.STROKE);
+		mBackgroundColorPaint.setStrokeWidth(mCircleStrokeWidth);
+
+		invalidate();
+	}
+
+	/**
+	 * updates the paint of the marker
+	 */
+	private void updateMarkerColor() {
+		mMarkerColorPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+		mMarkerColorPaint.setColor(mProgressBackgroundColor);
+		mMarkerColorPaint.setStyle(Paint.Style.STROKE);
+		mMarkerColorPaint.setStrokeWidth(mCircleStrokeWidth / 2);
+
+		invalidate();
+	}
+
+	/**
+	 * updates the paint of the progress and the thumb to give them a new visual
+	 * style
+	 */
+	private void updateProgressColor() {
+		mProgressColorPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+		mProgressColorPaint.setColor(mProgressColor);
+		mProgressColorPaint.setStyle(Paint.Style.STROKE);
+		mProgressColorPaint.setStrokeWidth(mCircleStrokeWidth);
+
+		mThumbColorPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+		mThumbColorPaint.setColor(mProgressColor);
+		mThumbColorPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+		mThumbColorPaint.setStrokeWidth(mCircleStrokeWidth);
+
+		invalidate();
 	}
 
 }
