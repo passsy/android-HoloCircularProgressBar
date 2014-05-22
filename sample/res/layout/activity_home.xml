@@ -15,8 +15,8 @@
         android:layout_height="300dp"
         android:layout_above="@+id/zero"
         android:layout_below="@+id/auto_animate_switch"
-        app:marker_progress="0.3f"
-        app:progress="0.4f"
+        app:marker_progress="0.3"
+        app:progress="0.4"
         android:layout_centerHorizontal="true" />
 
     <Button
