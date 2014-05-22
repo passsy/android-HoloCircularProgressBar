@@ -21,7 +21,7 @@ import android.view.View;
  * The Class HoloCircularProgressBar.
  *
  * @author Pascal.Welsch
- * @version 1.1 (12.10.2013)
+ * @version 1.2 (22.05.2014)
  * @since 05.03.2013
  */
 public class HoloCircularProgressBar extends View {
@@ -385,6 +385,10 @@ public class HoloCircularProgressBar extends View {
         return bundle;
     }
 
+    public int getCircleStrokeWidth() {
+        return mCircleStrokeWidth;
+    }
+
     /**
      * similar to {@link #getProgress}
      */
@@ -501,6 +505,20 @@ public class HoloCircularProgressBar extends View {
     }
 
     /**
+     * Sets the wheel size.
+     *
+     * @param dimension the new wheel size
+     */
+    public void setWheelSize(final int dimension) {
+        mCircleStrokeWidth = dimension;
+
+        // update the paints
+        updateBackgroundColor();
+        updateMarkerColor();
+        updateProgressColor();
+    }
+
+    /**
      * Compute insets.
      *
      * <pre>
@@ -565,17 +583,7 @@ public class HoloCircularProgressBar extends View {
      * @return the marker rotation
      */
     private float getMarkerRotation() {
-
         return 360 * mMarkerProgress;
-    }
-
-    /**
-     * Sets the wheel size.
-     *
-     * @param dimension the new wheel size
-     */
-    private void setWheelSize(final int dimension) {
-        mCircleStrokeWidth = dimension;
     }
 
     /**
