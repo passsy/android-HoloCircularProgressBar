@@ -99,7 +99,6 @@ public class CircularProgressBarSample extends Activity {
 				}
 				animate(mHoloCircularProgressBar, null, 1f, 1000);
 				mHoloCircularProgressBar.setMarkerProgress(1f);
-				mHoloCircularProgressBar.setProgressColor(Color.CYAN);
 
 			}
 		});
