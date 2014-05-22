@@ -6,7 +6,7 @@
         <item name="stroke_width">5dp</item>
         <item name="progress" format="float">0.1</item>
         <item name="progress_color">#ffff4444</item>
-        <item name="progress_background_color">@android:color/background_light</item>
+        <item name="progress_background_color">#ffffffff</item>
         <item name="marker_visible">true</item>
         <item name="thumb_visible">true</item>
     </style>
@@ -17,7 +17,7 @@
         <item name="stroke_width">5dp</item>
         <item name="progress" format="float">0.1</item>
         <item name="progress_color">#ffff4444</item>
-        <item name="progress_background_color">@android:color/darker_gray</item>
+        <item name="progress_background_color">#aaa</item>
         <item name="marker_visible">true</item>
         <item name="thumb_visible">true</item>
     </style>
