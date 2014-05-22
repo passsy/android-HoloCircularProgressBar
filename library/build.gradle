@@ -5,20 +5,15 @@ apply plugin: 'maven'
 group = 'de.passsy.holocircularprogressbar'
 version = '1.0.0'
 
-
-sourceCompatibility = 1.6
-targetCompatibility = 1.6
-
-
 android {
 
 
     compileSdkVersion 19
-    buildToolsVersion '19.0.3'
+    buildToolsVersion '19.1.0'
 
     defaultConfig {
         minSdkVersion 7
-        targetSdkVersion 18
+        targetSdkVersion 19
     }
 
     sourceSets {
