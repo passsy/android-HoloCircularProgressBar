@@ -16,6 +16,10 @@ HoloCircularProgressBar is a Custom View implementation for Android you might kn
 
 You can see the ProgressBar working in the sample application. Just check out the library and create a new "Android Project form Existing Code"
 
+### Development status 
+
+This project is currently under development. Check out the `development` branch. It should be pretty stable, contains some bugfixes but is not finally tested. 
+
 ### Use it in your own Code
 
 Add the View in your Layout
