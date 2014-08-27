@@ -9,6 +9,8 @@
         <attr name="progress_background_color" format="color" />
         <attr name="thumb_visible" format="boolean" />
         <attr name="marker_visible" format="boolean" />
+        <attr name="indeterminate" format="boolean" />
+        <attr name="background_drawable" format="reference" />
         <attr name="android:gravity" />
     </declare-styleable>
 
