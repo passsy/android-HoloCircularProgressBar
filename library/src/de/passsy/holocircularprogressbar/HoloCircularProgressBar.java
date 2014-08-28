@@ -5,7 +5,10 @@ package de.passsy.holocircularprogressbar;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -57,7 +60,9 @@ public class HoloCircularProgressBar extends View {
 	 */
 	private static final String INSTANCE_STATE_PROGRESS_COLOR = "progress_color";
 
-	/**
+    private static final int INDETERMINATE_BAR_WIDTH = 60;
+
+    /**
 	 * true if not all properties are set. then the view isn't drawn and there
 	 * are no errors in the LayoutEditor
 	 */
@@ -196,7 +201,15 @@ public class HoloCircularProgressBar extends View {
 	 */
 	private boolean mIsThumbEnabled = true;
 
-	/**
+
+    private boolean mIndeterminate = false;
+    private boolean mHasAnimation;
+    private int mAnimateRotation = 0;
+
+    private final int mBackgroundDrawable;
+    private long mAnimationTime;
+
+    /**
 	 * Instantiates a new holo circular progress bar.
 	 * 
 	 * @param context
@@ -243,6 +256,8 @@ public class HoloCircularProgressBar extends View {
 		setWheelSize((int) attributes.getDimension(R.styleable.HoloCircularProgressBar_stroke_width, 10));
 		mIsThumbEnabled = attributes.getBoolean(R.styleable.HoloCircularProgressBar_thumb_visible, true);
 		mIsMarkerEnabled = attributes.getBoolean(R.styleable.HoloCircularProgressBar_marker_visible, true);
+        mIndeterminate = attributes.getBoolean(R.styleable.HoloCircularProgressBar_indeterminate, false);
+        mBackgroundDrawable = attributes.getResourceId(R.styleable.HoloCircularProgressBar_background_drawable, 0);
 
 		mGravity = attributes.getInt(R.styleable.HoloCircularProgressBar_android_gravity, Gravity.CENTER);
 
@@ -268,21 +283,51 @@ public class HoloCircularProgressBar extends View {
 	 */
 	@Override
 	protected void onDraw(final Canvas canvas) {
-
 		// All of our positions are using our internal coordinate system.
 		// Instead of translating
 		// them we let Canvas do the work for us.
 		canvas.translate(mTranslationOffsetX, mTranslationOffsetY);
 
-		final float progressRotation = getCurrentRotation();
+        if (mBackgroundDrawable != 0) {
+            Resources res = getResources();
+            Bitmap bitmap = BitmapFactory.decodeResource(res, mBackgroundDrawable);
+            float right = bitmap.getWidth() / 2.0f;
+            float bottom = bitmap.getHeight() / 2.0f;
 
-		// draw the background
-		if (!mOverrdraw) {
-			canvas.drawArc(mCircleBounds, 270, -(360 - progressRotation), false, mBackgroundColorPaint);
-		}
+            RectF bitmapBound = new RectF(-right, -bottom, right, bottom);
 
-		// draw the progress or a full circle if overdraw is true
-		canvas.drawArc(mCircleBounds, 270, mOverrdraw ? 360 : progressRotation, false, mProgressColorPaint);
+            canvas.drawBitmap(bitmap, null, bitmapBound, new Paint());
+        }
+
+        final float progressRotation = getCurrentRotation();
+        if (mHasAnimation) {
+            canvas.save();
+
+            long time = System.currentTimeMillis();
+            if (time - 100 >= mAnimationTime) {
+                mAnimateRotation += INDETERMINATE_BAR_WIDTH;
+                mAnimationTime = time;
+            }
+
+            if (mAnimateRotation > 360 - INDETERMINATE_BAR_WIDTH) {
+                mAnimateRotation = 0;
+            }
+
+            float startAngle = 270 + mAnimateRotation;
+
+            canvas.drawArc(mCircleBounds, startAngle, -(360 - INDETERMINATE_BAR_WIDTH), false, mBackgroundColorPaint);
+            canvas.drawArc(mCircleBounds, startAngle, INDETERMINATE_BAR_WIDTH, false, mProgressColorPaint);
+
+            postInvalidateDelayed(100);
+        } else {
+            // draw the background
+            if (!mOverrdraw) {
+                canvas.drawArc(mCircleBounds, 270, -(360 - progressRotation), false, mBackgroundColorPaint);
+            }
+
+            // draw the progress or a full circle if overdraw is true
+            canvas.drawArc(mCircleBounds, 270, mOverrdraw ? 360 : progressRotation, false, mProgressColorPaint);
+        }
 
 		// draw the marker at the correct rotated position
 		if (mIsMarkerEnabled) {
@@ -382,6 +427,24 @@ public class HoloCircularProgressBar extends View {
 		bundle.putInt(INSTANCE_STATE_PROGRESS_BACKGROUND_COLOR, mProgressBackgroundColor);
 		return bundle;
 	}
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        if (mIndeterminate) {
+            startAnimation();
+        }
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        if (mIndeterminate) {
+            stopAnimation();
+        }
+        // This should come after stopAnimation(), otherwise an invalidate message remains in the
+        // queue, which can prevent the entire view hierarchy from being GC'ed during a rotation
+        super.onDetachedFromWindow();
+    }
 
 	/**
 	 * Compute insets.
@@ -629,5 +692,61 @@ public class HoloCircularProgressBar extends View {
 	public void setThumbEnabled(final boolean enabled) {
 		mIsThumbEnabled = enabled;
 	}
+
+    public synchronized void setIndeterminate(boolean indeterminate) {
+        if (mIndeterminate != indeterminate) {
+            mIndeterminate = indeterminate;
+            if (indeterminate) {
+                startAnimation();
+            } else {
+                stopAnimation();
+            }
+        }
+    }
+
+    @Override
+    public void setVisibility(int v) {
+        if (getVisibility() != v) {
+            super.setVisibility(v);
+
+            if (mIndeterminate) {
+                // let's be nice with the UI thread
+                if (v == GONE || v == INVISIBLE) {
+                    stopAnimation();
+                } else {
+                    startAnimation();
+                }
+            }
+        }
+    }
+
+    @Override
+    protected void onVisibilityChanged(View changedView, int visibility) {
+        super.onVisibilityChanged(changedView, visibility);
+
+        if (mIndeterminate) {
+            // let's be nice with the UI thread
+            if (visibility == GONE || visibility == INVISIBLE) {
+                stopAnimation();
+            } else {
+                startAnimation();
+            }
+        }
+    }
+
+    void startAnimation() {
+        if (getVisibility() != VISIBLE) {
+            return;
+        }
+
+        mHasAnimation = true;
+        postInvalidate();
+    }
+
+    void stopAnimation() {
+        mHasAnimation = false;
+        postInvalidate();
+    }
+
 
 }
