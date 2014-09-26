@@ -333,7 +333,19 @@ public class HoloCircularProgressBar extends View {
         setMeasuredDimension(min, height);
 
         final float halfWidth = min * 0.5f;
-        mRadius = halfWidth - mThumbRadius;
+
+        // width of the drawed circle (+ the drawedThumb)
+        final float drawedWith;
+        if (isThumbEnabled()) {
+            drawedWith = mThumbRadius * (5f / 6f);
+        } else if (isMarkerEnabled()) {
+            drawedWith = mCircleStrokeWidth * 1.4f;
+        } else {
+            drawedWith = mCircleStrokeWidth / 2f;
+        }
+
+        // -0.5f for pixel perfect fit inside the viewbounds
+        mRadius = halfWidth - drawedWith - 0.5f;
 
         mCircleBounds.set(-mRadius, -mRadius, mRadius, mRadius);
 
