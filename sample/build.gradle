@@ -1,4 +1,4 @@
-apply plugin: 'android'
+apply plugin: 'com.android.application'
 apply plugin: 'maven'
 
 group = 'de.passsy.circularprogressbarsample'
@@ -11,15 +11,13 @@ targetCompatibility = 1.6
 
 android {
 
-
     compileSdkVersion 19
-    buildToolsVersion '19.0.3'
+    buildToolsVersion '19.1.0'
 
     defaultConfig {
         minSdkVersion 7
-        targetSdkVersion 18
+        targetSdkVersion 19
     }
-
 
     sourceSets {
         main {
@@ -28,6 +26,10 @@ android {
             res.srcDirs = ['res']
             java.srcDirs = ['src']
         }
+    }
+
+    lintOptions {
+        abortOnError false
     }
 }
 

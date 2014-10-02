@@ -1,24 +1,14 @@
-
-apply plugin: 'android-library'
+apply plugin: 'com.android.library'
 apply plugin: 'maven'
 
-group = 'de.passsy.holocircularprogressbar'
-version = '1.0.0'
-
-
-sourceCompatibility = 1.6
-targetCompatibility = 1.6
-
-
 android {
-
 
     compileSdkVersion 19
     buildToolsVersion '19.1.0'
 
     defaultConfig {
         minSdkVersion 7
-        targetSdkVersion 18
+        targetSdkVersion 19
     }
 
     sourceSets {
@@ -27,6 +17,35 @@ android {
             resources.srcDirs = ['src']
             res.srcDirs = ['res']
             java.srcDirs = ['src']
+        }
+    }
+}
+
+uploadArchives {
+    repositories.mavenDeployer {
+        repository(url: "file:///${project.buildDir}/mvn-repo")
+
+        pom.groupId     = 'de.passsy'
+        pom.artifactId  = 'holocircularprogressbar'
+        pom.version     = '1.0.0'
+        pom.packaging   = 'aar'
+
+        pom.project {
+            name 'holocircularprogressbar'
+            description 'Easily allow users to post debug logs online'
+            url 'https://github.com/rhodey/android-HoloCircularProgressBar'
+            licenses {
+                license {
+                    name 'Apache License, Version 2.0'
+                    url 'http://www.apache.org/licenses/LICENSE-2.0'
+                }
+            }
+            developers {
+                developer {
+                    id 'passsy'
+                    name 'Pascal Welsch'
+                }
+            }
         }
     }
 }
