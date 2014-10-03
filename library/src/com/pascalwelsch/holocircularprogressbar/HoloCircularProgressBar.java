@@ -1,6 +1,3 @@
-/**
- *
- */
 package com.pascalwelsch.holocircularprogressbar;
 
 import android.annotation.SuppressLint;
@@ -19,10 +16,12 @@ import android.view.View;
 
 
 /**
- * The Class HoloCircularProgressBar.
+ * HoloCircularProgressBar custom view.
+ *
+ * https://github.com/passsy/android-HoloCircularProgressBar
  *
  * @author Pascal.Welsch
- * @version 1.2 (22.05.2014)
+ * @version 1.3 (03.10.2014)
  * @since 05.03.2013
  */
 public class HoloCircularProgressBar extends View {
