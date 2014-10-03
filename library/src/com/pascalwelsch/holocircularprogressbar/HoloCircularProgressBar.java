@@ -1,7 +1,7 @@
 /**
  *
  */
-package de.passsy.holocircularprogressbar;
+package com.pascalwelsch.holocircularprogressbar;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -16,6 +16,8 @@ import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
+
+import de.passsy.holocircularprogressbar.R;
 
 /**
  * The Class HoloCircularProgressBar.

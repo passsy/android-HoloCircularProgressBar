@@ -1,4 +1,4 @@
-package de.passsy.circularprogressbarsample;
+package com.pascalwelsch.circularprogressbarsample;
 
 import java.util.Random;
 
@@ -20,7 +20,9 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.Switch;
-import de.passsy.holocircularprogressbar.HoloCircularProgressBar;
+import com.pascalwelsch.holocircularprogressbar.HoloCircularProgressBar;
+
+import de.passsy.circularprogressbarsample.R;
 
 /**
  * The Class CircularProgressBarSample.

@@ -1,13 +1,9 @@
-
 apply plugin: 'android-library'
-apply plugin: 'maven'
 
 group = 'de.passsy.holocircularprogressbar'
 version = '1.0.0'
 
 android {
-
-
     compileSdkVersion 19
     buildToolsVersion '19.1.0'
 
