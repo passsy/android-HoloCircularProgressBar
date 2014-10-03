@@ -16,10 +16,6 @@ HoloCircularProgressBar is a Custom View implementation for Android you might kn
 
 You can see the ProgressBar working in the sample application. Just check out the library and create a new "Android Project form Existing Code"
 
-### Development status 
-
-This project is currently under development. Check out the `development` branch. It should be pretty stable, contains some bugfixes but is not finally tested. 
-
 ### Use it in your own Code
 
 Add the View in your Layout
@@ -31,7 +27,6 @@ Add the View in your Layout
         
         
 ### Style
-
 
 Don't forget to add a default style to your AppTheme
 
@@ -77,6 +72,17 @@ You have to add a style for this View. see the Style section
 You found bugs? Report them or feel free to fix them by yourself and make a pull request. No one wants a buggy library
 
 ## What's new (Changelog)
+
+##### version 1.3 `12.10.13`
+
+	* new package name
+	* visible in `ScrollView`
+	* gradle and Android Studio support
+	
+##### version 1.2 `22.05.14`
+
+	* bugfixes for orientationchange
+	* layout bugs
 
 ##### version 1.1 `12.10.13`
 
