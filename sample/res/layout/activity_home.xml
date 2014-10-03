@@ -22,7 +22,7 @@
             android:layout_height="wrap_content">
 
             <com.pascalwelsch.holocircularprogressbar.HoloCircularProgressBar
-                android:id="@+id/holoCircularProgressBar1"
+                android:id="@+id/holoCircularProgressBar"
                 android:layout_width="300dp"
                 android:layout_height="300dp"
                 app:marker_progress="0.3"

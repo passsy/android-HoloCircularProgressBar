@@ -66,7 +66,7 @@ public class CircularProgressBarSample extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
 
-		mHoloCircularProgressBar = (HoloCircularProgressBar) findViewById(R.id.holoCircularProgressBar1);
+		mHoloCircularProgressBar = (HoloCircularProgressBar) findViewById(R.id.holoCircularProgressBar);
 
 		mColorSwitchButton = (Button) findViewById(R.id.random_color);
 		mColorSwitchButton.setOnClickListener(new OnClickListener() {
