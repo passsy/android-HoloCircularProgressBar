@@ -17,7 +17,6 @@ import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
 
-import de.passsy.holocircularprogressbar.R;
 
 /**
  * The Class HoloCircularProgressBar.
