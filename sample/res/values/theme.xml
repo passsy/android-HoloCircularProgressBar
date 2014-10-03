@@ -1,0 +1,10 @@
+<resources>
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="android:Theme.Holo">
+        <item name="circularProgressBarStyle">@style/CircularProgressBar</item>
+    </style>
+    
+    <style name="AppThemeLight" parent="android:Theme.Holo.Light">
+        <item name="circularProgressBarStyle">@style/CircularProgressBarLight</item>
+    </style>
+</resources>

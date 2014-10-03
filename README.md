@@ -16,53 +16,16 @@ HoloCircularProgressBar is a Custom View implementation for Android you might kn
 
 You can see the ProgressBar working in the sample application. Just check out the library and create a new "Android Project form Existing Code"
 
-### Development status 
-
-This project is currently under development. Check out the `development` branch. It should be pretty stable, contains some bugfixes but is not finally tested. 
-
 ### Use it in your own Code
 
 Add the View in your Layout
 
-    <de.passsy.holocircularprogressbar.HoloCircularProgressBar
-        android:id="@+id/holoCircularProgressBar1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-#### Got this error?
-
-    The following classes could not be instantiated:
-    - de.passsy.holocircularprogressbar.HoloCircularProgressBar (Open Class, Show Error Log)
-    See the Error Log (Window > Show View) for more details.
-    Tip: Use View.isInEditMode() in your custom views to skip code when shown in Eclipse
-
-If your Layout Editor can't draw the view, you have to restart Eclipse. There is a bug in the ADT Plugin
-
-##### Got the next error?
-
-    Missing styles. Is the correct theme chosen for this layout?
-    Use the Theme combo box above the layout to choose a different layout, or fix the theme style references.
-    
-    Failed to find style 'circularProgressBarStyle' in current theme
-
-You have to add a style for this View. see below
-
-There are several XML attributes you can add the the HoloCircularProgressBar
-
-    <de.passsy.holocircularprogressbar.HoloCircularProgressBar
-        android:id="@+id/holoCircularProgressBar1"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-
-        app:stroke_width="10dp"
-        app:progress="0.4"
-        app:marker_progress="0.6"
-        app:progress_color="@android:color/holo_orange_dark"
-        app:progress_background_color="#cccccc"
-        app:gravity="center"
-        app:marker_visible="false"
-        app:thumb_visible="false"/>
-
+    <com.pascalwelsch.holocircularprogressbar.HoloCircularProgressBar
+        android:id="@+id/holoCircularProgressBar"
+        android:layout_width="300dp"
+        android:layout_height="300dp"/>
+        
+        
 ### Style
 
 Don't forget to add a default style to your AppTheme
@@ -73,7 +36,7 @@ Don't forget to add a default style to your AppTheme
 
 I added two simple styles `@style/CircularProgressBar` and `@style/CircularProgressBarLight` to give you a quick start. You can see both styles in action in the sample Project
 
-After you wrote your own style you might restart your Eclipse again as I mentioned before. The ADT Plugin really has some troubles working with Android Libraries and Styles
+After you wrote your own style you have to rebuild your project in Android Studio (or restart your Eclipse. The ADT Plugin really has some troubles working with Android Libraries and Styles).
 
 Of cause can you change the color at runtime. Here are some examples from the sample app:
 
@@ -81,12 +44,45 @@ Of cause can you change the color at runtime. Here are some examples from the sa
   <img height="400px" src="https://raw.github.com/passsy/android-HoloCircularProgressBar/master/raw/screenshot3.png"/>
   <img height="400px" src="https://raw.github.com/passsy/android-HoloCircularProgressBar/master/raw/screenshot4.png"/>
 </div>
+        
+## Errors
+
+There might be some error from your IDE. Most of them are simply solved after building the project.
+
+### Got this error?
+
+    The following classes could not be instantiated:
+    - de.passsy.holocircularprogressbar.HoloCircularProgressBar (Open Class, Show Error Log)
+    See the Error Log (Window > Show View) for more details.
+    Tip: Use View.isInEditMode() in your custom views to skip code when shown in Eclipse
+
+If your Layout Editor can't draw the view, you have to restart Eclipse. There is a bug in the ADT Plugin
+
+#### Got the next error?
+
+    Missing styles. Is the correct theme chosen for this layout?
+    Use the Theme combo box above the layout to choose a different layout, or fix the theme style references.
+    
+    Failed to find style 'circularProgressBarStyle' in current theme
+
+You have to add a style for this View. see the Style section
 
 ## Bugs
 
 You found bugs? Report them or feel free to fix them by yourself and make a pull request. No one wants a buggy library
 
 ## What's new (Changelog)
+
+##### version 1.3 `12.10.13`
+
+	* new package name
+	* visible in `ScrollView`
+	* gradle and Android Studio support
+	
+##### version 1.2 `22.05.14`
+
+	* bugfixes for orientationchange
+	* layout bugs
 
 ##### version 1.1 `12.10.13`
 

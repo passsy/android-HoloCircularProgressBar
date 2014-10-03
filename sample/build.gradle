@@ -1,23 +1,12 @@
 apply plugin: 'android'
-apply plugin: 'maven'
-
-group = 'de.passsy.circularprogressbarsample'
-version = '1.0.0'
-
-
-sourceCompatibility = 1.6
-targetCompatibility = 1.6
-
 
 android {
-
-
     compileSdkVersion 19
-    buildToolsVersion '19.0.3'
+    buildToolsVersion '19.1.0'
 
     defaultConfig {
-        minSdkVersion 7
-        targetSdkVersion 18
+        minSdkVersion 11
+        targetSdkVersion 19
     }
 
 

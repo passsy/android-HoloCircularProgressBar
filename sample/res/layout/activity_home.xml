@@ -1,20 +1,35 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".CircularProgressBarSample" xmlns:app="http://schemas.android.com/apk/res/de.passsy.circularprogressbarsample">
+    tools:context=".CircularProgressBarSample">
 
-    <de.passsy.holocircularprogressbar.HoloCircularProgressBar
-        android:id="@+id/holoCircularProgressBar1"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
+    <ScrollView
+        android:layout_width="match_parent"
         android:layout_above="@+id/zero"
+        android:layout_centerHorizontal="true"
         android:layout_below="@+id/auto_animate_switch"
-        android:layout_centerHorizontal="true" />
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="wrap_content">
+
+            <com.pascalwelsch.holocircularprogressbar.HoloCircularProgressBar
+                android:id="@+id/holoCircularProgressBar"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                app:marker_progress="0.3"
+                app:progress="0.4" />
+        </LinearLayout>
+    </ScrollView>
+
 
     <Button
         android:id="@+id/zero"
@@ -39,7 +54,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:text="Auto animation" />
+        android:text="Auto animation"
+        tools:ignore="NewApi" />
 
     <Button
         android:id="@+id/random_color"
