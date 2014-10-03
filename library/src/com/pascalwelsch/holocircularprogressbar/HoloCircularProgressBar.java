@@ -29,7 +29,7 @@ import de.passsy.holocircularprogressbar.R;
 public class HoloCircularProgressBar extends View {
 
     /**
-     * The Constant TAG.
+     * TAG constant for logging
      */
     private static final String TAG = HoloCircularProgressBar.class.getSimpleName();
 
@@ -331,10 +331,25 @@ public class HoloCircularProgressBar extends View {
         final int width = getDefaultSize(
                 getSuggestedMinimumWidth() + getPaddingLeft() + getPaddingRight(),
                 widthMeasureSpec);
-        final int min = Math.min(width, height);
-        setMeasuredDimension(min, height);
 
-        final float halfWidth = min * 0.5f;
+        final int diameter;
+        if (heightMeasureSpec == MeasureSpec.UNSPECIFIED) {
+            // ScrollView
+            diameter = width;
+            computeInsets(0, 0);
+        } else if (widthMeasureSpec == MeasureSpec.UNSPECIFIED) {
+            // HorizontalScrollView
+            diameter = height;
+            computeInsets(0, 0);
+        } else {
+            // Default
+            diameter = Math.min(width, height);
+            computeInsets(width - diameter, height - diameter);
+        }
+
+        setMeasuredDimension(diameter, diameter);
+
+        final float halfWidth = diameter * 0.5f;
 
         // width of the drawed circle (+ the drawedThumb)
         final float drawedWith;
@@ -353,7 +368,6 @@ public class HoloCircularProgressBar extends View {
 
         mThumbPosX = (float) (mRadius * Math.cos(0));
         mThumbPosY = (float) (mRadius * Math.sin(0));
-        computeInsets(width - min, height - min);
 
         mTranslationOffsetX = halfWidth + mHorizontalInset;
         mTranslationOffsetY = halfWidth + mVerticalInset;
@@ -521,6 +535,7 @@ public class HoloCircularProgressBar extends View {
 
     /**
      * shows or hides the thumb of the progress bar
+     *
      * @param enabled true to show the thumb
      */
     public void setThumbEnabled(final boolean enabled) {
@@ -558,11 +573,9 @@ public class HoloCircularProgressBar extends View {
      */
     @SuppressLint("NewApi")
     private void computeInsets(final int dx, final int dy) {
-        final int layoutDirection;
         int absoluteGravity = mGravity;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            layoutDirection = getLayoutDirection();
-            absoluteGravity = Gravity.getAbsoluteGravity(mGravity, layoutDirection);
+            absoluteGravity = Gravity.getAbsoluteGravity(mGravity, getLayoutDirection());
         }
 
         switch (absoluteGravity & Gravity.HORIZONTAL_GRAVITY_MASK) {
