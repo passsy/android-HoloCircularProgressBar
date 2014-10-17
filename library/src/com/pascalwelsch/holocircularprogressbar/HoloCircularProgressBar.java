@@ -345,7 +345,7 @@ public class HoloCircularProgressBar extends View {
             computeInsets(width - diameter, height - diameter);
         }
 
-        setMeasuredDimension(diameter, diameter);
+        setMeasuredDimension(width, height);
 
         final float halfWidth = diameter * 0.5f;
 
