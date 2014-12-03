@@ -9,6 +9,7 @@
         <item name="progress_background_color">#ffffffff</item>
         <item name="marker_visible">true</item>
         <item name="thumb_visible">true</item>
+        <item name="thumb_shape">square</item>
     </style>
     
     <style name="CircularProgressBarLight">
@@ -20,5 +21,6 @@
         <item name="progress_background_color">#aaa</item>
         <item name="marker_visible">true</item>
         <item name="thumb_visible">true</item>
+        <item name="thumb_shape">square</item>
     </style>
 </resources>

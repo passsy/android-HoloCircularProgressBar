@@ -27,6 +27,13 @@ import android.view.View;
 public class HoloCircularProgressBar extends View {
 
     /**
+     * Types of thumb shape
+     */
+    public enum ThumbShape {
+        Square, Circle
+    }
+
+    /**
      * TAG constant for logging
      */
     private static final String TAG = HoloCircularProgressBar.class.getSimpleName();
@@ -68,12 +75,17 @@ public class HoloCircularProgressBar extends View {
     private static final String INSTANCE_STATE_MARKER_VISIBLE = "marker_visible";
 
     /**
+     * used to save and restore the type of the thumb in this instance
+     */
+    private static final String INSTANCE_STATE_THUMB_TYPE = "thumb_type";
+
+    /**
      * The rectangle enclosing the circle.
      */
     private final RectF mCircleBounds = new RectF();
 
     /**
-     * the rect for the thumb square
+     * the rect for the thumb shape
      */
     private final RectF mSquareRect = new RectF();
 
@@ -185,6 +197,11 @@ public class HoloCircularProgressBar extends View {
     private int mThumbRadius = 20;
 
     /**
+     * The type of Thumb shape to draw.
+     */
+    private ThumbShape mThumbShape = ThumbShape.Square;
+
+    /**
      * The Translation offset x which gives us the ability to use our own coordinates system.
      */
     private float mTranslationOffsetX;
@@ -252,6 +269,9 @@ public class HoloCircularProgressBar extends View {
                         .getBoolean(R.styleable.HoloCircularProgressBar_thumb_visible, true));
                 setMarkerEnabled(attributes
                         .getBoolean(R.styleable.HoloCircularProgressBar_marker_visible, true));
+                setThumbShape(ThumbShape.values()[
+                        attributes.getInt(R.styleable.HoloCircularProgressBar_thumb_shape, 0)
+                        ]);
 
                 mGravity = attributes
                         .getInt(R.styleable.HoloCircularProgressBar_android_gravity,
@@ -310,13 +330,21 @@ public class HoloCircularProgressBar extends View {
             // draw the thumb square at the correct rotated position
             canvas.save();
             canvas.rotate(progressRotation - 90);
-            // rotate the square by 45 degrees
-            canvas.rotate(45, mThumbPosX, mThumbPosY);
-            mSquareRect.left = mThumbPosX - mThumbRadius / 3;
-            mSquareRect.right = mThumbPosX + mThumbRadius / 3;
-            mSquareRect.top = mThumbPosY - mThumbRadius / 3;
-            mSquareRect.bottom = mThumbPosY + mThumbRadius / 3;
-            canvas.drawRect(mSquareRect, mThumbColorPaint);
+
+
+            if (mThumbShape == ThumbShape.Square) {
+                // rotate the square by 45 degrees
+                canvas.rotate(45, mThumbPosX, mThumbPosY);
+                mSquareRect.left = mThumbPosX - mThumbRadius / 3;
+                mSquareRect.right = mThumbPosX + mThumbRadius / 3;
+                mSquareRect.top = mThumbPosY - mThumbRadius / 3;
+                mSquareRect.bottom = mThumbPosY + mThumbRadius / 3;
+                canvas.drawRect(mSquareRect, mThumbColorPaint);
+            } else {
+                canvas.drawCircle(mThumbPosX, mThumbPosY,
+                        mThumbRadius/2, mThumbColorPaint);
+            }
+
             canvas.restore();
         }
     }
@@ -396,6 +424,11 @@ public class HoloCircularProgressBar extends View {
 
             mIsMarkerEnabled = bundle.getBoolean(INSTANCE_STATE_MARKER_VISIBLE);
 
+            final ThumbShape thumbShape = ThumbShape.values()[bundle.getInt(INSTANCE_STATE_THUMB_TYPE)];
+            if (thumbShape != mThumbShape) {
+                setThumbShape(thumbShape);
+            }
+
             super.onRestoreInstanceState(bundle.getParcelable(INSTANCE_STATE_SAVEDSTATE));
             return;
         }
@@ -413,6 +446,7 @@ public class HoloCircularProgressBar extends View {
         bundle.putInt(INSTANCE_STATE_PROGRESS_BACKGROUND_COLOR, mProgressBackgroundColor);
         bundle.putBoolean(INSTANCE_STATE_THUMB_VISIBLE, mIsThumbEnabled);
         bundle.putBoolean(INSTANCE_STATE_MARKER_VISIBLE, mIsMarkerEnabled);
+        bundle.putInt(INSTANCE_STATE_THUMB_TYPE, mThumbShape.ordinal());
         return bundle;
     }
 
@@ -541,6 +575,17 @@ public class HoloCircularProgressBar extends View {
     }
 
     /**
+     * sets the shape of the thumb
+     *
+     * @param shape shape of the thumb
+     */
+    public void setThumbShape(ThumbShape thumbShape) {
+        mThumbShape = thumbShape;
+        if (mIsThumbEnabled)
+            invalidate();
+    }
+
+    /**
      * Sets the wheel size.
      *
      * @param dimension the new wheel size
@@ -657,8 +702,6 @@ public class HoloCircularProgressBar extends View {
         mThumbColorPaint.setColor(mProgressColor);
         mThumbColorPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         mThumbColorPaint.setStrokeWidth(mCircleStrokeWidth);
-
         invalidate();
     }
-
 }

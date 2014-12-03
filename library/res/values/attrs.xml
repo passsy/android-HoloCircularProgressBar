@@ -8,7 +8,11 @@
         <attr name="progress_color" format="color" />
         <attr name="progress_background_color" format="color" />
         <attr name="thumb_visible" format="boolean" />
-        <attr name="marker_visible" format="boolean" />
+        <attr name="marker_visible" format="boolean"/>
+        <attr name="thumb_shape" format="enum">
+            <enum name="square" value="0" />
+            <enum name="circle" value="1" />
+        </attr>
         <attr name="android:gravity" />
     </declare-styleable>
 
