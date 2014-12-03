@@ -495,6 +495,15 @@ public class HoloCircularProgressBar extends View {
     }
 
     /**
+     * Gets the thumb shape.
+     *
+     * @return the shape of the thumb
+     */
+    public ThumbShape getThumbShape() {
+        return mThumbShape;
+    }
+
+    /**
      * Sets the marker enabled.
      *
      * @param enabled the new marker enabled
@@ -579,8 +588,8 @@ public class HoloCircularProgressBar extends View {
      *
      * @param shape shape of the thumb
      */
-    public void setThumbShape(ThumbShape thumbShape) {
-        mThumbShape = thumbShape;
+    public void setThumbShape(ThumbShape shape) {
+        mThumbShape = shape;
         if (mIsThumbEnabled)
             invalidate();
     }
