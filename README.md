@@ -73,7 +73,7 @@ You found bugs? Report them or feel free to fix them by yourself and make a pull
 
 ## What's new (Changelog)
 
-##### version 1.3 `12.10.13`
+##### version 1.3 `03.10.14`
 
 	* new package name
 	* visible in `ScrollView`
